@@ -6,7 +6,7 @@ require 'uri'
 require 'digest/sha1'
 
 def update?(name, site)
-  file = "data/update/#{name}.html"
+  file = "data/update/#{name}.sha1"
   old = File.exists?(file)? IO.read(file):""
   new = Digest::SHA1.hexdigest(Net::HTTP.get(URI.parse(site)))
   open(file, "w") { |f| f << new } unless old == new

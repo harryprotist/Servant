@@ -1,2 +1,4 @@
 sites:
-  math221: "http://people.reed.edu/~jimfix/math221/hws" 
+  math221_hw: "http://people.reed.edu/~jimfix/math221/hws" 
+  math221_lbs: "http://people.reed.edu/~jimfix/math221/lbs" 
+  math221_prs: "http://people.reed.edu/~jimfix/math221/prs" 

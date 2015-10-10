@@ -7,6 +7,13 @@ include Jabber
 
 class AgentXMPP
 
+  def run(message)
+  # WIP
+    reply = Message.new(msg.from, resp)
+    reply.type = msg.type
+    client.send(reply)
+  end
+
   def connect(user, pass)
     jid = JID.new(user)
     client = Client.new(jid)

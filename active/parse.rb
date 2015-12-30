@@ -65,32 +65,57 @@ obj = {}
 while cmd != ""
   token, cmd = eat(cmd)
   if ctxt == ""
-    obj[:exec] = server_run if token == "s"
-    obj[:exec] = laptop_run if token == "l"
-    obj[:exec] = desktop_run if token == "d"
+    obj[:exec] = case token
+      when "l"; laptop_run
+      when "s"; server_run
+      when "d"; desktop_run
+      else
+        ctxt = "error"
+        next
+      end
     ctxt = "computer"
   elsif ctxt == "computer"
     if token == "e"
       puts obj[:exec].call(cmd)
       break
     end
-    ctxt = "music" if token == "m"
-    ctxt = "skype" if token == "s"
-    ctxt = "test"  if token == "t"
+    ctxt = case token
+      when "m"; "music"
+      when "s"; "skype"
+      when "t"; "test"
+      else
+        ctxt = "error"
+        next
+      end
   elsif ctxt == "music"
-    puts obj[:exec].call("mpc pause") if token == "p"
-    puts obj[:exec].call("mpc play") if token == "r"  
-    puts obj[:exec].call("mpc next") if token == "f"
-    puts obj[:exec].call("mpc prev") if token == "b"
+    puts case token
+      when "p"; obj[:exec].call("mpc pause")
+      when "r"; obj[:exec].call("mpc play")
+      when "f"; obj[:exec].call("mpc next")
+      when "b"; puts obj[:exec].call("mpc prev")
+      else
+        ctxt = "error"
+        next 
+      end
     break
   elsif ctxt == "skype"
-    puts obj[:exec].call("snotify unread") if token == "u"
+    if token == "u"; puts obj[:exec].call("snotify unread")
+    else
+      ctxt = "error"
+      next
+    end
     break
   elsif ctxt == "text"
-    puts obj[:exec].call("uptime") if token == "u"
-    puts obj[:exec].call("w") if token == "w"
+    puts case token
+      when "u"; obj[:exec].call("uptime")
+      when "w"; obj[:exec].call("w")
+      else
+        ctxt = "error"
+        next
+      end
     break
   else
+    puts "?"
     break
   end 
 end

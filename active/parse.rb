@@ -42,7 +42,7 @@ end
 
 def eat(str)
   if str =~ /^\s*(\w*)(\s*$|\s+(.*))/
-    if NATO.keys.include? $1
+    if NATO.keys.include? ($1).downcase
       ret = NATO[($1).downcase]
       str = $3
       return ret, str
@@ -62,7 +62,7 @@ cmd = ARGV[0]
 ctxt = ""
 obj = {}
 
-while cmd != ""
+while true
   token, cmd = eat(cmd)
   if ctxt == ""
     obj[:exec] = case token
@@ -105,7 +105,7 @@ while cmd != ""
       next
     end
     break
-  elsif ctxt == "text"
+  elsif ctxt == "test"
     puts case token
       when "u"; obj[:exec].call("uptime")
       when "w"; obj[:exec].call("w")
@@ -118,4 +118,8 @@ while cmd != ""
     puts "?"
     break
   end 
+  if cmd == ""
+    puts "?"
+    break
+  end
 end

@@ -34,6 +34,7 @@ class AgentXMPP
       puts "send: #{resp}" 
       if $?.success?
         resp = "!" if resp.chomp.length == 0
+        resp.gsub!(/\n/, "<br>")
         reply = Message.new(msg.from, resp)
         reply.type = msg.type
         client.send(reply)

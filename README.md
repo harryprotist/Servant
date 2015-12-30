@@ -10,6 +10,9 @@ Commands in the `passive` directory run in the background.  Commands in the
 passive scripts. Most of the scripts are written in ruby, but they are
 connected through the shell using stdout so any language can be used.
 
+Directories containing possibly sensitive information will have
+`.skel` files, outlining how to set them up.
+
 ## Directories
 
 - `passive` - Background scripts
@@ -24,4 +27,4 @@ connected through the shell using stdout so any language can be used.
 - `passive/xmpp.rb` - listens for xmpp messages and responds using `active/parse.rb`
 - `active/parse.rb` - takes message as input and outputs response
 - `active/update.rb` - outputs a link to any files in `conf/update.yml` that have been updated
-- `active/digest.rb` - _in progress_ generates an email with news and other information
+- `active/email.rb` - _in progress_ generates an email with news and other information

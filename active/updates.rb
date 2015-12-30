@@ -5,20 +5,25 @@ require 'net/http'
 require 'uri'
 require 'digest/sha1'
 
-def update?(name, site)
-  file = "data/update/#{name}.sha1"
-  old = File.exists?(file)? IO.read(file):""
-  new = Digest::SHA1.hexdigest(Net::HTTP.get(URI.parse(site)))
-  open(file, "w") { |f| f << new } unless old == new
-  return old != new
-end
+class ActiveUpdates
 
-def get_sites(file)
-  return YAML.load(IO.read(file))["sites"].each do |k, v|
-    [k, v]
+  def self.update?(name, site)
+    file = "data/update/#{name}.sha1"
+    old = File.exists?(file)? IO.read(file):""
+    new = Digest::SHA1.hexdigest(Net::HTTP.get(URI.parse(site)))
+    open(file, "w") { |f| f << new } unless old == new
+    return old != new
   end
-end
 
-get_sites("conf/updates.yml").each do |s|
-  puts "#{s[0]} - #{s[1]}" if update?(s[0], s[1])
+  def self.get_sites(file)
+    return YAML.load(IO.read(file))["sites"].each do |k, v|
+      [k, v]
+    end
+  end
+
+  def self.run()
+    get_sites("conf/updates.yml").each do |s|
+      puts "#{s[0]} - #{s[1]}" if update?(s[0], s[1])
+  end
+
 end

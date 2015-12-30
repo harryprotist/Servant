@@ -1,5 +1,4 @@
 #!/usr/bin/ruby
-
 NATO = {
   "alpha" => "a",
   "bravo" => "b",

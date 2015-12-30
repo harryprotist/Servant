@@ -1,0 +1,5 @@
+smtp.example.com
+25
+username@example.com
+password
+defaultrecipient@example.com

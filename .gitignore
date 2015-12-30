@@ -1,3 +1,6 @@
 auth/**
-log/*.*
-data/*.*
+log/**
+data/**
+conf/**
+!auth/*.skel
+!conf/*.skel

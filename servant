@@ -1,0 +1,7 @@
+#!/usr/bin/ruby
+
+require './passive/xmpp.rb'
+
+xmpp = AgentXMPP.new
+
+sleep

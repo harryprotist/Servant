@@ -5,6 +5,8 @@ require 'xmpp4r/client'
 require 'socket'
 include Jabber
 
+require './active/parse.rb'
+
 class AgentXMPP
 
   def run(message)
@@ -30,11 +32,11 @@ class AgentXMPP
     puts "processing message"
     unless msg.body.nil? and msg.type != :error
       puts "recv: #{msg.body.chomp}"
-      resp = `ruby active/parse.rb "#{msg.body}"`
+      resp = ActiveParse(msg.body)
       puts "send: #{resp}" 
       if $?.success?
         resp = "!" if resp.chomp.length == 0
-        resp.gsub!(/\n/, "<br>")
+        resp.chomp!.gsub!(/\n/, "<br>")
         reply = Message.new(msg.from, resp)
         reply.type = msg.type
         client.send(reply)
@@ -53,6 +55,3 @@ class AgentXMPP
   end
 
 end
-
-agent = AgentXMPP.new
-sleep
